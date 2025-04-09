@@ -3,6 +3,8 @@ import socketio
 
 users_count = []
 lost_queries = []
+count_sid = {}
+
 # Создаем экземпляр синхронного сервера Socket.IO
 sio = socketio.Server()
 
@@ -32,14 +34,37 @@ def get_user_all(sid, data):
     print(f"online users: {online_users}  {sid}")
     sio.emit("users", {"online": online_users})
 
-@sio.on("*")
-def add_query(event, sid, data):
-    lost_queries.append(sid)
+@sio.on("increase")
+def increase_count_sid(sid, event):
+    if count_sid.get(sid) != None:
+        count_sid[sid] = count_sid.get(sid) + 1
+    else:
+        count_sid[sid] = 1
+
+@sio.on("decrease")
+def decrease_count_sid(sid, event):
+    if count_sid.get(sid) != None:
+        count_sid[sid] = count_sid.get(sid) - 1
+    else:
+        count_sid[sid] = -1
+
+@sio.on("get_score")
+def get_score_count_sid(sid, event):
+    print(count_sid)
+    score = count_sid.get(sid)
+    sio.emit(event="score", data={"score": score})
+
 
 @sio.on("count_queries")
 def get_count_queries(sid, data):
     count_query = len(lost_queries)
     sio.emit(event="queries", data={"lost": count_query})
+
+@sio.on("*")
+def add_query(event, sid, data):
+    lost_queries.append(sid)
+
+
 
 
 # Запускаем eventlet веб-сервер
