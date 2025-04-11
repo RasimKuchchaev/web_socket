@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Socket.IO Клиент</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Socket.IO клиент</h1>
+    <ul id="messages"></ul>
+
+    <script>
+        const socket = io();
+
+        // При подключении
+        socket.on("connect", () => {
+            const li = document.createElement("li");
+            li.textContent = "✅ Подключено к серверу";
+            document.getElementById("messages").appendChild(li);
+        });
+
+        // При получении сообщений от сервера
+        socket.on("message", (data) => {
+            const li = document.createElement("li");
+            li.textContent = typeof data === 'object' ? JSON.stringify(data) : data;
+            document.getElementById("messages").appendChild(li);
+        });
+
+        // При отключении
+        socket.on("disconnect", () => {
+            const li = document.createElement("li");
+            li.textContent = "❌ Отключено от сервера";
+            document.getElementById("messages").appendChild(li);
+        });
+    </script>
+</body>
+</html>
