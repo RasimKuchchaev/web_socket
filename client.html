@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Client</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Клиент Socket.IO</h1>
+    <ul id="messages"></ul>
+
+    <script>
+        const socket = io("http://localhost:5000", {
+            transports: ["websocket"]  // Используем websocket напрямую
+        });
+
+        // Подключение
+        socket.on("connect", () => {
+            console.log("✅ Подключено к серверу");
+        });
+
+        // Получение сообщений
+        socket.on("message", (data) => {
+            const li = document.createElement("li");
+            li.textContent = data;
+            document.getElementById("messages").appendChild(li);
+        });
+
+        // Отключение
+        socket.on("disconnect", () => {
+            const li = document.createElement("li");
+            li.textContent = "❌ Отключено от сервера";
+            document.getElementById("messages").appendChild(li);
+        });
+    </script>
+</body>
+</html>
