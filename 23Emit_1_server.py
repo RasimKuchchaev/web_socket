@@ -1,24 +1,15 @@
 import socketio
 import eventlet
 import logging
-from flask import Flask, send_from_directory
 
 # Настройка логов
 logging.basicConfig(level=logging.INFO)
 
-# Создаём Flask-приложение для обслуживания статики
-app = Flask(__name__)
-
 # Создаём сервер Socket.IO
 sio = socketio.Server(async_mode='eventlet')
 
-# Встраиваем Socket.IO сервер в Flask-приложение
-app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
-
-# Роут для отдачи HTML файла
-@app.route('/')
-def index():
-    return send_from_directory('.', 'client.html')
+# Создаем WSGI приложение и связываем его с Socket.IO
+app = socketio.WSGIApp(sio)
 
 # Событие подключения клиента
 @sio.event
