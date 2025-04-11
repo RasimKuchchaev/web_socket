@@ -12,4 +12,7 @@ pip install "python-socketio[client]"
 Uvicorn - это реализация ASGI веб-сервера для Python.<br>
 pip install uvicorn
 
+Асинхронный HTTP-клиент/сервер для asyncio и Python.<br>
+pip install aiohttp
+
    
