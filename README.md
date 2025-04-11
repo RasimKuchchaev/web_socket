@@ -15,4 +15,7 @@ pip install uvicorn
 Асинхронный HTTP-клиент/сервер для asyncio и Python.<br>
 pip install aiohttp
 
+fastapi <br>
+pip install fastapi
+
    
