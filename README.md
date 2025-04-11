@@ -1,5 +1,11 @@
-pip install python-socketio
+server: <br>
+pip install python-socketio <br>
 pip install eventlet
 
-#Download Postman
+#Download Postman <br>
 https://www.postman.com/downloads/
+
+Клиент: <br>
+pip install "python-socketio[client]"
+
+   
