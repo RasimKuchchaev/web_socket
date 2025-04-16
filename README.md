@@ -18,4 +18,12 @@ pip install aiohttp
 fastapi <br>
 pip install fastapi
 
+Клиент веб-сокета <br>
+pip install websocket-client
+
+Еще нам пригодится зависимость request: <br>
+pip install requests
+
+pip install loguru <br>
+
    
