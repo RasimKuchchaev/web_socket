@@ -4,8 +4,15 @@ import socketio
 sio = socketio.SimpleClient()
 
 # Подключение к серверу
+print("Подключаемся к серверу")
 sio.connect('ws://0.0.0.0:80')
 
-# получение события от сервера используется sio.receive()
+print("Ждем и получаем ответ сервера")
 event, data = sio.receive()
-print(event, data)
+print(f"{event} {data}")
+
+print("Отправляем сообщение")
+sio.emit("send_message", {"text": "hello"})
+event, data = sio.receive()
+print("Получаем сообщение")
+print(f"{event} {data}")
