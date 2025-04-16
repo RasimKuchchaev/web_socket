@@ -25,8 +25,15 @@ sio.emit("join_lobby", {"text": "hello"})
 print("Отправляем get_rooms")
 sio.emit("get_rooms", {"text": "hello"})
 
-# Ожидаем немного, чтобы сервер успел ответить
-time.sleep(2)
+print("Отправляем brоadcast_lobby")
+sio.emit("brоadcast_lobby", {"text": "hello"})
 
-# Завершаем соединение
-sio.disconnect()
+# Удерживаем соединение
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("Отключаемся от сервера...")
+    sio.disconnect()
+
+
