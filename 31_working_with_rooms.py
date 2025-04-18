@@ -27,11 +27,26 @@ def get_rooms(sid, data):
     print(f"Получаем все комнаты пользователя: {result}")
     sio.emit("message", {"text": f"Клиент {sid} находится в комнатах: {result}"})
 
+# Отправить сообщение в комнате
 @sio.on("brоadcast_lobby")
 def my_message(sid, data):
     # Отправить сообщение всем в комнате
     sio.emit('message', "hello to everyone in lobby", room='lobby')
     # Отправить сообщение всем в комнате кроме себя
     sio.emit('message', "hello to everyone in lobby", room='lobby', skip_sid=sid)
+
+# Покинуть комнату
+@sio.on("leave_lobby")
+def exit_chat(sid, data):
+    sio.leave_room(sid, 'lobby')
+    sio.emit('message', "!!!!!! leave_lobby !!!!!!", room='lobby', skip_sid=sid)
+    print("!!!!!! leave_lobby !!!!!!")
+
+# Удалить комнату и всех выгнать
+@sio.on("close_room")
+def close_room(sid, data):
+    sio.close_room("lobby")
+    sio.emit('message', "!!!!!! close_room !!!!!!", to=sid)
+    print("!!!!!! close_room !!!!!!")
 
 eventlet.wsgi.server(eventlet.listen(('', 80)), app)

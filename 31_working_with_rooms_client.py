@@ -28,6 +28,12 @@ sio.emit("get_rooms", {"text": "hello"})
 print("Отправляем brоadcast_lobby")
 sio.emit("brоadcast_lobby", {"text": "hello"})
 
+print("Отправляем leave_lobby")
+sio.emit("leave_lobby", {"text": "leave_lobby"})
+
+print("Отправляем close_room")
+sio.emit("close_room", {"text": "close_room"})
+
 # Удерживаем соединение
 try:
     while True:
